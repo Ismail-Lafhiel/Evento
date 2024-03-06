@@ -4,11 +4,8 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
-<<<<<<< HEAD
 use App\Http\Controllers\Admin\EventController;
-=======
 use App\Http\Controllers\CategoryController;
->>>>>>> 6c2473d104aadfcdd974330c1b4b3196f45a6ab5
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,11 +65,6 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     Route::post('/users/{user}/permissions', [UserController::class, 'givePermission'])->name('users.permissions');
     Route::delete('/users/{user}/permissions/{permission}', [UserController::class, 'revokePermission'])->name('users.permissions.revoke');
 
-<<<<<<< HEAD
-    // event
-    Route::resource('events', EventController::class);
-=======
     //category route
     Route::resource('/categories', CategoryController::class);
->>>>>>> 6c2473d104aadfcdd974330c1b4b3196f45a6ab5
 });
