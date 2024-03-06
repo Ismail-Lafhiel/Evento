@@ -18,8 +18,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
+
+Route::get('/company', function () {
+    return view('company');
+})->name('company');
+
+Route::get('/discover-events', function () {
+    return view('discover-events');
+})->name('discover-events');
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
 
 Route::middleware([
     'auth:sanctum',
