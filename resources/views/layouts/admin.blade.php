@@ -46,12 +46,9 @@
                 </x-admin-link>
                 <x-admin-link :active="request()->routeIs('admin.users.index')" href="{{ route('admin.users.index') }}">Users
                 </x-admin-link>
-<<<<<<< HEAD
-                <x-admin-link :active="request()->routeIs('admin.events.index')" href="{{ route('admin.events.index') }}">Events
-=======
                 <x-admin-link :active="request()->routeIs('admin.categories.index')" href="{{ route('admin.categories.index') }}">Categories
->>>>>>> 6c2473d104aadfcdd974330c1b4b3196f45a6ab5
                 </x-admin-link>
+                <x-admin-link :active="request()->routeIs('admin.events.index')" href="{{ route('admin.events.index') }}">Events</x-admin-link>
                 <div @click.away="open = false" class="relative" x-data="{ open: false }">
                     <button @click="open = !open"
                         class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark:bg-transparent dark:focus:text-white dark:hover:text-white dark:focus:bg-primary-600 dark:hover:bg-primary-600 md:block hover:text-primary-900 focus:text-primary-900 hover:bg-primary-200 focus:bg-primary-200 focus:outline-none focus:shadow-outline">

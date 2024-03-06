@@ -67,4 +67,6 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
 
     //category route
     Route::resource('/categories', CategoryController::class);
+    Route::resource('/events', EventController::class);
+
 });
