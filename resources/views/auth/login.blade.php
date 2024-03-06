@@ -31,8 +31,7 @@
                 </span>
             </div>
         </div>
-        <div class="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0"
-            style="background-color: #161616;">
+        <div class="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0 bg-gray-50">
             <div class="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center"
                 style="background-image: url(https://images.unsplash.com/photo-1577495508048-b635879837f1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80);">
                 <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
@@ -47,13 +46,13 @@
                     <div class="pb-2 pt-4">
                         <x-input id="email" class="block mt-1 w-full" type="email" name="email"
                             :value="old('email')" required autofocus autocomplete="username" placeholder="Email"
-                            class="block w-full p-4 text-lg rounded-sm bg-black" />
+                            class="block w-full p-4 text-lg rounded-sm text-gray-500 bg-gray-50" />
 
                     </div>
                     <div class="pb-2 pt-4">
                         <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
                             autocomplete="current-password" placeholder="Password"
-                            class="block w-full p-4 text-lg rounded-sm bg-black" />
+                            class="block w-full p-4 text-lg rounded-sm text-gray-500 bg-gray-50" />
                     </div>
                     <div class="pb-2 pt-4">
                         <label for="remember_me" class="flex items-center">
@@ -61,7 +60,7 @@
                             <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                         </label>
                     </div>
-                    <div class="text-right text-gray-400 hover:underline hover:text-gray-100">
+                    <div class="text-right text-gray-400 hover:underline hover:text-gray-700">
                         @if (Route::has('password.request'))
                             <a href="{{ route('password.request') }}">
                                 {{ __('Forgot your password?') }}
@@ -70,7 +69,7 @@
                     </div>
                     <div class="px-4 pb-2 pt-4">
                         <button
-                            class="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none">{{ __('Log in') }}</button>
+                            class="uppercase block w-full p-4 text-lg rounded-full bg-primary-500 hover:bg-primary-700 focus:outline-none">{{ __('Log in') }}</button>
                     </div>
 
                     <div class="p-4 text-center right-0 left-0 flex justify-center space-x-4 mt-16 lg:hidden ">

@@ -26,8 +26,12 @@ Route::get('/company', function () {
 })->name('company');
 
 Route::get('/discover-events', function () {
-    return view('discover-events');
+    return view('events');
 })->name('discover-events');
+
+Route::get('/event', function () {
+    return view('event');
+})->name('event');
 
 Route::get('/contact', function () {
     return view('contact');
