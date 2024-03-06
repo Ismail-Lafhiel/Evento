@@ -119,7 +119,7 @@
                                             <path clip-rule="evenodd" fill-rule="evenodd"
                                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                         </svg>
-                                        Add Category
+                                        Add Event
                                     </button>
 
                                     <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
@@ -162,6 +162,7 @@
                                         <th scope="col" class="px-4 py-3">location</th>
                                         <th scope="col" class="px-4 py-3">category</th>
                                         <th scope="col" class="px-4 py-3">seats number</th>
+                                        <th scope="col" class="px-4 py-3">Reservation Status</th>
                                         <th scope="col" class="px-4 py-3">
                                             <span class="sr-only">Actions</span>
                                         </th>
@@ -179,6 +180,7 @@
                                                 <td class="px-4 py-3">{{ $event->location }}</td>
                                                 <td class="px-4 py-3">{{ $event->category->category_name }}</td>
                                                 <td class="px-4 py-3">{{ $event->seats_number }}</td>
+                                                <td class="px-4 py-3">{{ $event->reservation_status }}</td>
                                                 <td class="px-4 py-3 flex items-center justify-end">
                                                     <button id="{{ $event->id }}-dropdown-button"
                                                         data-dropdown-toggle="{{ $event->id }}-dropdown"
@@ -194,6 +196,10 @@
                                                         class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                                                             aria-labelledby="{{ $event->id }}-dropdown-button">
+                                                            <li>
+                                                                <a href="{{ route('admin.events.show', $event->id) }}"
+                                                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+                                                            </li>
                                                             <li>
                                                                 <a href="{{ route('admin.events.edit', $event->id) }}"
                                                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
@@ -266,7 +272,7 @@
                             </div>
                         </div>
                     @endif
-                    <form id="roleForm" action="{{ route('admin.events.store') }}" method="POST">
+                    <form id="roleForm" action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div class="sm:col-span-2">

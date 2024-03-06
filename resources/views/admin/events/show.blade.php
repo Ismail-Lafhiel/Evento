@@ -1,72 +1,49 @@
-<x-guest-layout>
-    <x-header />
-    <div class="bg-dots-darker bg-center bg-gray-50 dark:bg-gray-900">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 lg:max-w-7xl max-lg:mx-auto mt-10">
-            <div class="grid items-start grid-cols-1 lg:grid-cols-2 gap-10">
-                <div class="w-full lg:sticky top-0 text-center">
-                    <div class="lg:h-[600px]">
-                        <img src="https://readymadeui.com/images/product6.webp" alt="Product"
-                            class="lg:w-11/12 w-full h-full rounded-xl object-cover object-top" />
-                    </div>
-                    <div class="flex flex-wrap gap-x-8 gap-y-6 justify-center mx-auto mt-6">
-                        <img src="https://readymadeui.com/images/product6.webp" alt="Product1"
-                            class="w-20 cursor-pointer rounded-xl outline" />
-                        <img src="https://readymadeui.com/images/product8.webp" alt="Product2"
-                            class="w-20 cursor-pointer rounded-xl" />
-                        <img src="https://readymadeui.com/images/product5.webp" alt="Product3"
-                            class="w-20 cursor-pointer rounded-xl" />
-                        <img src="https://readymadeui.com/images/product7.webp" alt="Product4"
-                            class="w-20 cursor-pointer rounded-xl" />
-                    </div>
-                </div>
-                <div>
-                    <div class="flex flex-wrap items-start gap-4">
-                        <div>
-                            <h2 class="text-2xl font-extrabold text-gray-800">Adjective Attire | T-shirt</h2>
-                            <p class="text-sm text-gray-400 mt-2">Well-Versed Commerce</p>
+<x-admin-layout>
+    <div class="py-12 w-full w">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+                <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+                    <h2 class="text-4xl mb-8 font-semibold text-gray-900 dark:text-white">
+                        Show Event
+                    </h2>
+                    <div>
+                        <div class="grid gap-6 mb-6 md:grid-cols-2">
+                            <div class="sm:col-span-2">
+                                <input type="text" value="{{ $event->title }}" readonly
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <textarea rows="4" readonly
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Type event description">{{ $event->description }}</textarea>
+                            </div>
+                            <div>
+                                <img src="{{ asset('storage/' . $event->event_img) }}" alt="">
+                            </div>
+                            <div>
+                                <input type="text" readonly value="{{ $event->location }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            </div>
+                            <div>
+                                <input type="text" readonly value="{{ $event->seats_number }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            </div>
+                            <div>
+                                <input type="text" readonly value="{{ $event->category->category_name }}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            </div>
+                            <div>
+                                <input datepicker type="date" value="{{ $event->event_date }}" readonly
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
+                            <div>
+                                <input type="text" value="{{ $event->reservation_status }}" readonly
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </div>
                         </div>
                     </div>
-                    <hr class="my-8" />
-                    <div class="flex flex-wrap gap-4 items-start">
-                        <div>
-                            <p class="text-gray-800 text-3xl font-bold">$30</p>
-                        </div>
-                    </div>                    
-                    <hr class="my-8" />
-                    <div class="flex flex-wrap gap-4">
-                        <button type="button"
-                            class="min-w-[200px] px-4 py-3 bg-gray-800 hover:bg-gray-900 text-white text-sm font-bold rounded">Buy
-                            now</button>
-                        <button type="button"
-                            class="min-w-[200px] px-4 py-2.5 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-bold rounded">Add
-                            to cart</button>
-                    </div>
                 </div>
-            </div>
-            <div class="mt-24 max-w-4xl">
-                <ul class="flex border-b">
-                    <li
-                        class="text-gray-800 font-bold text-sm bg-gray-100 py-3 px-8 border-b-2 border-gray-800 cursor-pointer transition-all">
-                        Description</li>
-                </ul>
-                <div class="mt-8">
-                    <h3 class="text-lg font-bold text-gray-800">Product Description</h3>
-                    <p class="text-sm text-gray-400 mt-4">Elevate your casual style with our premium men's t-shirt.
-                        Crafted for comfort and designed with a modern fit, this versatile shirt is an essential
-                        addition to your wardrobe. The soft and breathable fabric ensures all-day comfort, making it
-                        perfect for everyday wear. Its classic crew neck and short sleeves offer a timeless look.
-                    </p>
-                </div>
-                <ul class="space-y-3 list-disc mt-6 pl-4 text-sm text-gray-400">
-                    <li>A gray t-shirt is a wardrobe essential because it is so versatile.</li>
-                    <li>Available in a wide range of sizes, from extra small to extra large, and even in tall and
-                        petite
-                        sizes.</li>
-                    <li>This is easy to care for. They can usually be machine-washed and dried on low heat.</li>
-                    <li>You can add your own designs, paintings, or embroidery to make it your own.</li>
-                </ul>
-            </div>
+            </section>
         </div>
     </div>
-    <x-footer />
-</x-guest-layout>
+</x-admin-layout>

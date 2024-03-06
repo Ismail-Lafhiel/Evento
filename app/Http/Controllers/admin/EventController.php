@@ -24,18 +24,20 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $validated = $request->validate([
             "title" => "required|min:5",
             "description" => "required|min:50|max:150",
-            "event_img" => 'required|max:2048',
+            "event_img" => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             "event_date" => "required|date",
             "location" => "required",
             "category_id" => "required",
             "seats_number" => "required|integer|min:1",
             "reservation_status" => "required|in:automatic,manual"
         ]);
-
+        if ($request->hasFile('event_img')) {
+            $imagePath = $request->file('event_img')->storeAs('public/events_img', uniqid() . '.' . $request->file('event_img')->getClientOriginalExtension());
+            $validated['event_img'] = str_replace('public/', '', $imagePath);
+        }
         $event = Event::create($validated);
         return redirect()->route('admin.events.index')->with('success', 'Event created successfully');
     }
@@ -65,14 +67,17 @@ class EventController extends Controller
         $validated = $request->validate([
             "title" => "required|min:5",
             "description" => "required|min:50|max:150",
-            "event_img" => 'required|max:2048',
+            "event_img" => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             "event_date" => "required|date",
             "location" => "required",
             "category_id" => "required",
             "seats_number" => "required|integer|min:1",
             "reservation_status" => "required|in:automatic,manual"
         ]);
-
+        if ($request->hasFile('event_img')) {
+            $imagePath = $request->file('event_img')->storeAs('public/events_img', uniqid() . '.' . $request->file('event_img')->getClientOriginalExtension());
+            $validated['event_img'] = str_replace('public/', '', $imagePath);
+        }
         $event->update($validated);
         return redirect()->route("admin.events.index", $event)->with("success", "Event updated successfully");
     }
