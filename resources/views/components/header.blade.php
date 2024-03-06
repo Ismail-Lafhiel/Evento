@@ -56,7 +56,7 @@
                     <li>
                         <x-header-link :active="request()->routeIs('contact')" href="{{ route('contact') }}">Contact
                         </x-header-link>
-                    </li>
+                    </li> 
                 </ul>
             </div>
         </div>
