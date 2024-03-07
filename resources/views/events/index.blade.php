@@ -166,8 +166,8 @@
                                         <th scope="col" class="px-4 py-3">seats number</th>
                                         <th scope="col" class="px-4 py-3">Reservation Type</th>
                                         <th scope="col" class="px-4 py-3">Reservation Status</th>
-                                        @role("admin")
-                                        <th scope="col" class="px-4 py-3">Manage Reservation</th>
+                                        @role('admin')
+                                            <th scope="col" class="px-4 py-3">Manage Reservation</th>
                                         @endrole
                                         <th scope="col" class="px-4 py-3">
                                             <span class="sr-only">Actions</span>
@@ -190,77 +190,80 @@
                                                 @forelse ($event->reservations as $reservation)
                                                     <td class="px-4 py-3">{{ $reservation->status }}
                                                     </td>
-                                                    <td>
-                                                        @if ($reservation->status === 'pending' && $reservation->event->reservation_status === 'manual')
-                                                            <div class="flex space-x-2">
-                                                                @can('approve reservations')
-                                                                    <form method="post"
-                                                                        action="{{ route('approve-reservation', ['reservation' => $reservation->id]) }}">
-                                                                        @csrf
-                                                                        <button class="text-green-600 underline"
-                                                                            type="submit">Approve</button>
-                                                                    </form>
-                                                                @endcan
+                                                    @role('admin')
+                                                        <td>
+                                                            @if ($reservation->status === 'pending' && $reservation->event->reservation_status === 'manual')
+                                                                <div class="flex space-x-2">
+                                                                    @can('approve reservations')
+                                                                        <form method="post"
+                                                                            action="{{ route('approve-reservation', ['reservation' => $reservation->id]) }}">
+                                                                            @csrf
+                                                                            <button class="text-green-600 underline"
+                                                                                type="submit">Approve</button>
+                                                                        </form>
+                                                                    @endcan
 
-                                                                @can('deny reservations')
-                                                                    <form method="post"
-                                                                        action="{{ route('deny-reservation', ['reservation' => $reservation->id]) }}">
-                                                                        @csrf
-                                                                        <button class="text-red-600 underline"
-                                                                            type="submit">Deny</button>
-                                                                    </form>
-                                                                @endcan
-                                                            </div>
+                                                                    @can('deny reservations')
+                                                                        <form method="post"
+                                                                            action="{{ route('deny-reservation', ['reservation' => $reservation->id]) }}">
+                                                                            @csrf
+                                                                            <button class="text-red-600 underline"
+                                                                                type="submit">Deny</button>
+                                                                        </form>
+                                                                    @endcan
+                                                                </div>
                                                             @else
-                                                            <div>Nothing to manage</td>
-                                                        @endif
+                                                                <div>Nothing to manage
+                                                        </td>
+                                                    @endif
                                                     </td>
-                                                @empty
-                                                    <td colspan="2">No reservations available</td>
-                                                @endforelse
-                                                <td class="px-4 py-3 flex items-center justify-end">
-                                                    <button id="{{ $event->id }}-dropdown-button"
-                                                        data-dropdown-toggle="{{ $event->id }}-dropdown"
-                                                        class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
-                                                        type="button">
-                                                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                            viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                            <path
-                                                                d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                        </svg>
-                                                    </button>
-                                                    <div id="{{ $event->id }}-dropdown"
-                                                        class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                                            aria-labelledby="{{ $event->id }}-dropdown-button">
-                                                            <li>
-                                                                <a href="{{ route('events.show', $event->id) }}"
-                                                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
-                                                            </li>
-                                                            @role('organizer')
-                                                                <li>
-                                                                    <a href="{{ route('events.edit', $event->id) }}"
-                                                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                                                </li>
-                                                            @endrole
-                                                        </ul>
-                                                        @role('organizer')
-                                                            <a id="deleteButton" data-modal-target="deleteModal"
-                                                                data-modal-toggle="deleteModal"
-                                                                data-record-id="{{ $event->id }}"
-                                                                data-action="{{ route('events.destroy', $event->id) }}"
-                                                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                                                Delete
-                                                            </a>
-                                                        @endrole
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr class="border-b dark:border-gray-700">
-                                            <td class="px-4 py-3">No results</td>
+                                                @endrole
+                                            @empty
+                                                <td colspan="2">No reservations available</td>
+                                        @endforelse
+                                        <td class="px-4 py-3 flex items-center justify-end">
+                                            <button id="{{ $event->id }}-dropdown-button"
+                                                data-dropdown-toggle="{{ $event->id }}-dropdown"
+                                                class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                                type="button">
+                                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                    viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                </svg>
+                                            </button>
+                                            <div id="{{ $event->id }}-dropdown"
+                                                class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                                    aria-labelledby="{{ $event->id }}-dropdown-button">
+                                                    <li>
+                                                        <a href="{{ route('events.show', $event->id) }}"
+                                                            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+                                                    </li>
+                                                    @role('organizer')
+                                                        <li>
+                                                            <a href="{{ route('events.edit', $event->id) }}"
+                                                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                        </li>
+                                                    @endrole
+                                                </ul>
+                                                @role('organizer')
+                                                    <a id="deleteButton" data-modal-target="deleteModal"
+                                                        data-modal-toggle="deleteModal"
+                                                        data-record-id="{{ $event->id }}"
+                                                        data-action="{{ route('events.destroy', $event->id) }}"
+                                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                        Delete
+                                                    </a>
+                                                @endrole
+                                            </div>
+                                        </td>
                                         </tr>
+                                    @endforeach
+                                @else
+                                    <tr class="border-b dark:border-gray-700">
+                                        <td class="px-4 py-3">No results</td>
+                                    </tr>
                                     @endif
                                 </tbody>
                             </table>

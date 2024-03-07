@@ -43,6 +43,6 @@ class ReservationController extends Controller
             'status' => $status,
         ]);
 
-        return redirect()->back()->with('success', "{$reservation->event->title} created successfully");
+        return redirect()->back()->with('success', "{$reservation->event->title} booked successfully");
     }
 }

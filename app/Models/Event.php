@@ -19,7 +19,8 @@ class Event extends Model
         "location",
         "category_id",
         "seats_number",
-        "reservation_status"
+        "reservation_status",
+        "user_id"
     ];
     public function category(): BelongsTo
     {
@@ -31,4 +32,8 @@ class Event extends Model
         return $this->hasMany(Reservation::class);
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

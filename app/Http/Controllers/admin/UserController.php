@@ -80,4 +80,26 @@ class UserController extends Controller
         session()->flash('success', "User deleted successfuly");
         return response()->json(['success' => true, 'message' => "User deleted successfuly"]);
     }
+
+
+    public function profileInfo()
+    {
+        $user = auth()->user();
+
+        $user->load('reservations.event');
+
+        $reservations = $user->reservations;
+
+        $user->load('events');
+
+        // Count the number of events created by the organizer
+        $numberOfEvents = $user->events->count();
+
+        // Count the total number of user applications for the organizer's events
+        $numberOfApplications = $user->events->sum(function ($event) {
+            return $event->reservations->count();
+        });
+
+        return view('profile', compact('user', 'reservations', 'numberOfEvents', 'numberOfApplications'));
+    }
 }

@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Event;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
@@ -40,6 +41,7 @@ class EventController extends Controller
             "seats_number" => "required|integer|min:1",
             "reservation_status" => "required|in:automatic,manual"
         ]);
+        $validated['user_id'] = Auth::id();
         if ($request->hasFile('event_img')) {
             $imagePath = $request->file('event_img')->storeAs('public/events_img', uniqid() . '.' . $request->file('event_img')->getClientOriginalExtension());
             $validated['event_img'] = str_replace('public/', '', $imagePath);
