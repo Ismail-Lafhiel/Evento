@@ -86,10 +86,8 @@ class UserController extends Controller
     {
         $user = auth()->user();
 
+        // Load reservations and events
         $user->load('reservations.event');
-
-        $reservations = $user->reservations;
-
         $user->load('events');
 
         // Count the number of events created by the organizer
@@ -100,6 +98,22 @@ class UserController extends Controller
             return $event->reservations->count();
         });
 
-        return view('profile', compact('user', 'reservations', 'numberOfEvents', 'numberOfApplications'));
+        // Count the number of booked events by the user
+        $numberOfBookedEvents = $user->reservations->count();
+
+        // Count the number of approved bookings
+        $numberOfApprovedBookings = $user->reservations->where('status', 'approved')->count();
+
+        // Count the number of denied bookings
+        $numberOfDeniedBookings = $user->reservations->where('status', 'denied')->count();
+
+        return view('profile', compact(
+            'user',
+            'numberOfEvents',
+            'numberOfApplications',
+            'numberOfBookedEvents',
+            'numberOfApprovedBookings',
+            'numberOfDeniedBookings'
+        ));
     }
 }

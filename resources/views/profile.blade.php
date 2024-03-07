@@ -53,6 +53,23 @@
                                                 class="text-sm text-blueGray-400">Bookings Received</span>
                                         </div>
                                     @endrole
+                                    @role('spectator')
+                                        <div class="mr-4 p-3 text-center">
+                                            <span
+                                                class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ $numberOfBookedEvents  }}</span><span
+                                                class="text-sm text-blueGray-400">Booked Events</span>
+                                        </div>
+                                        <div class="mr-4 p-3 text-center">
+                                            <span
+                                                class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ $numberOfApprovedBookings }}</span><span
+                                                class="text-sm text-blueGray-400">Approved Reservations</span>
+                                        </div>
+                                        <div class="mr-4 p-3 text-center">
+                                            <span
+                                                class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ $numberOfDeniedBookings }}</span><span
+                                                class="text-sm text-blueGray-400">Denied Reservations</span>
+                                        </div>
+                                    @endrole
                                 </div>
                             </div>
                         </div>
@@ -110,7 +127,8 @@
                                                     </div>
                                                     <h3 class="z-10 mt-3 text-3xl font-bold text-white">
                                                         {{ $event->title }}</h3>
-                                                    <div class="z-10 gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
+                                                    <div
+                                                        class="z-10 gap-y-1 overflow-hidden text-sm leading-6 text-gray-300">
                                                         {{ $event->reservation_status }}
                                                     </div>
                                                 </article>
