@@ -110,45 +110,47 @@
                             </div>
                             <div
                                 class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                                <div class="flex items-center space-x-3 w-full md:w-auto">
-                                    <button type="button" id="createBtn" data-modal-target="createModal"
-                                        data-modal-toggle="createModal"
-                                        class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                                        <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path clip-rule="evenodd" fill-rule="evenodd"
-                                                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                                        </svg>
-                                        Add Event
-                                    </button>
+                                @role('organizer')
+                                    <div class="flex items-center space-x-3 w-full md:w-auto">
+                                        <button type="button" id="createBtn" data-modal-target="createModal"
+                                            data-modal-toggle="createModal"
+                                            class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                                            <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                <path clip-rule="evenodd" fill-rule="evenodd"
+                                                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+                                            </svg>
+                                            Add Event
+                                        </button>
 
-                                    <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
-                                        class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                                        type="button">
-                                        <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path clip-rule="evenodd" fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                                        </svg>
-                                        Actions
-                                    </button>
-                                    <div id="actionsDropdown"
-                                        class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                            aria-labelledby="actionsDropdownButton">
-                                            <li>
-                                                <a href="#"
-                                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mass
-                                                    Edit</a>
-                                            </li>
-                                        </ul>
-                                        <div class="py-1">
-                                            <a
-                                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
-                                                all</a>
+                                        <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
+                                            class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                                            type="button">
+                                            <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                <path clip-rule="evenodd" fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                                            </svg>
+                                            Actions
+                                        </button>
+                                        <div id="actionsDropdown"
+                                            class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                                aria-labelledby="actionsDropdownButton">
+                                                <li>
+                                                    <a href="#"
+                                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mass
+                                                        Edit</a>
+                                                </li>
+                                            </ul>
+                                            <div class="py-1">
+                                                <a
+                                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
+                                                    all</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endrole
                             </div>
                         </div>
                         <div class="overflow-x-auto">
@@ -162,7 +164,11 @@
                                         <th scope="col" class="px-4 py-3">location</th>
                                         <th scope="col" class="px-4 py-3">category</th>
                                         <th scope="col" class="px-4 py-3">seats number</th>
+                                        <th scope="col" class="px-4 py-3">Reservation Type</th>
                                         <th scope="col" class="px-4 py-3">Reservation Status</th>
+                                        @role("admin")
+                                        <th scope="col" class="px-4 py-3">Manage Reservation</th>
+                                        @endrole
                                         <th scope="col" class="px-4 py-3">
                                             <span class="sr-only">Actions</span>
                                         </th>
@@ -181,6 +187,37 @@
                                                 <td class="px-4 py-3">{{ $event->category->category_name }}</td>
                                                 <td class="px-4 py-3">{{ $event->seats_number }}</td>
                                                 <td class="px-4 py-3">{{ $event->reservation_status }}</td>
+                                                @forelse ($event->reservations as $reservation)
+                                                    <td class="px-4 py-3">{{ $reservation->status }}
+                                                    </td>
+                                                    <td>
+                                                        @if ($reservation->status === 'pending' && $reservation->event->reservation_status === 'manual')
+                                                            <div class="flex space-x-2">
+                                                                @can('approve reservations')
+                                                                    <form method="post"
+                                                                        action="{{ route('approve-reservation', ['reservation' => $reservation->id]) }}">
+                                                                        @csrf
+                                                                        <button class="text-green-600 underline"
+                                                                            type="submit">Approve</button>
+                                                                    </form>
+                                                                @endcan
+
+                                                                @can('deny reservations')
+                                                                    <form method="post"
+                                                                        action="{{ route('deny-reservation', ['reservation' => $reservation->id]) }}">
+                                                                        @csrf
+                                                                        <button class="text-red-600 underline"
+                                                                            type="submit">Deny</button>
+                                                                    </form>
+                                                                @endcan
+                                                            </div>
+                                                            @else
+                                                            <div>Nothing to manage</td>
+                                                        @endif
+                                                    </td>
+                                                @empty
+                                                    <td colspan="2">No reservations available</td>
+                                                @endforelse
                                                 <td class="px-4 py-3 flex items-center justify-end">
                                                     <button id="{{ $event->id }}-dropdown-button"
                                                         data-dropdown-toggle="{{ $event->id }}-dropdown"
@@ -197,21 +234,25 @@
                                                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                                                             aria-labelledby="{{ $event->id }}-dropdown-button">
                                                             <li>
-                                                                <a href="{{ route('admin.events.show', $event->id) }}"
+                                                                <a href="{{ route('events.show', $event->id) }}"
                                                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
                                                             </li>
-                                                            <li>
-                                                                <a href="{{ route('admin.events.edit', $event->id) }}"
-                                                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                                            </li>
+                                                            @role('organizer')
+                                                                <li>
+                                                                    <a href="{{ route('events.edit', $event->id) }}"
+                                                                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                                </li>
+                                                            @endrole
                                                         </ul>
-                                                        <a id="deleteButton" data-modal-target="deleteModal"
-                                                            data-modal-toggle="deleteModal"
-                                                            data-record-id="{{ $event->id }}"
-                                                            data-action="{{ route('admin.events.destroy', $event->id) }}"
-                                                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                                            Delete
-                                                        </a>
+                                                        @role('organizer')
+                                                            <a id="deleteButton" data-modal-target="deleteModal"
+                                                                data-modal-toggle="deleteModal"
+                                                                data-record-id="{{ $event->id }}"
+                                                                data-action="{{ route('events.destroy', $event->id) }}"
+                                                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                                                Delete
+                                                            </a>
+                                                        @endrole
                                                     </div>
                                                 </td>
                                             </tr>
@@ -272,7 +313,8 @@
                             </div>
                         </div>
                     @endif
-                    <form id="roleForm" action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="roleForm" action="{{ route('events.store') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div class="sm:col-span-2">

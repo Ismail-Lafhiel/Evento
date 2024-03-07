@@ -10,7 +10,7 @@
                     <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
                         Where Moments Become Memories, and Every Gathering Tells a Unique Story.</p>
                     @auth
-                        <a href="{{route("discover-events")}}"
+                        <a href="{{ route('discover-events') }}"
                             class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                             Discover events
                             <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20"
@@ -20,8 +20,8 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </a>
-                        @else
-                        <a href="{{route("register")}}"
+                    @else
+                        <a href="{{ route('register') }}"
                             class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                             Get Started
                             <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20"
@@ -55,45 +55,19 @@
                                 inspiration for your next gathering.</p>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div
-                                class="bg-gradient-to-b from-indigo-800 to-indigo-600 text-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
-                                <img src="https://readymadeui.com/cardImg.webp" alt="Blog Post 1"
-                                    class="w-full h-64 object-cover" />
-                                <div class="p-6">
-                                    <h3 class="text-2xl font-semibold mb-2">Lorem Ipsum Dolor</h3>
-                                    <p class="text-sm opacity-75">Duis aute irure dolor in reprehenderit in
-                                        voluptate velit esse cillum dolore...</p>
-                                    <a href="javascript:void(0);"
-                                        class="mt-4 inline-block text-blue-200 text-sm hover:underline">Read
-                                        More</a>
+                            @foreach ($events as $event)
+                                <div onclick="window.location.href = '{{ route('event', $event->id) }}'"
+                                    class="bg-gradient-to-b cursor-pointer from-primary-800 to-primary-600 text-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                    <img src="{{ asset('storage/' . $event->event_img) }}" alt="Blog Post 1"
+                                        class="w-full h-64 object-cover" />
+                                    <div class="p-6">
+                                        <h3 class="text-2xl font-semibold mb-2 capitalize">{{ $event->title }}</h3>
+                                        <p class="text-sm opacity-75 capitalize truncate">{{ $event->description }}</p>
+                                        <a href="{{ route('event', $event->id) }}"
+                                            class="mt-4 inline-block text-blue-200 text-sm hover:underline">Discover</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div
-                                class="bg-gradient-to-b from-purple-800 to-purple-600 text-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
-                                <img src="https://readymadeui.com/hotel-img.webp" alt="Blog Post 2"
-                                    class="w-full h-64 object-cover" />
-                                <div class="p-6">
-                                    <h3 class="text-2xl font-semibold mb-2">Consectetur Adipiscing</h3>
-                                    <p class="text-sm opacity-75">Duis aute irure dolor in reprehenderit in
-                                        voluptate velit esse cillum dolore...</p>
-                                    <a href="javascript:void(0);"
-                                        class="mt-4 inline-block text-pink-200 text-sm hover:underline">Read
-                                        More</a>
-                                </div>
-                            </div>
-                            <div
-                                class="bg-gradient-to-b from-teal-800 to-teal-600 text-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
-                                <img src="https://readymadeui.com/team-image.webp" alt="Blog Post 3"
-                                    class="w-full h-64 object-cover" />
-                                <div class="p-6">
-                                    <h3 class="text-2xl font-semibold mb-2">Lorem Ipsum Sit Amet</h3>
-                                    <p class="text-sm opacity-75">Duis aute irure dolor in reprehenderit in
-                                        voluptate velit esse cillum dolore...</p>
-                                    <a href="javascript:void(0);"
-                                        class="mt-4 inline-block text-green-200 text-sm hover:underline">Read
-                                        More</a>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

@@ -100,7 +100,7 @@
                             </div>
                         </div>
                     @endif
-                    <form action="{{ route('admin.events.update', $event->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('events.update', $event->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid gap-6 mb-6 md:grid-cols-2">

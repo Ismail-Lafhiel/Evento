@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
@@ -13,8 +14,19 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::create(['name' => 'admin']);
-        Role::create(['name' => 'organizer']);
-        Role::create(['name' => 'spectator']);
+        $organizerRole = Role::create(['name' => 'organizer']);
+        $spectatorRole = Role::create(['name' => 'spectator']);
+        $adminRole = Role::create(['name' => 'admin']);
+
+        Permission::create(['name' => 'create events']);
+        Permission::create(['name' => 'edit events']);
+        Permission::create(['name' => 'delete events']);
+        Permission::create(['name' => 'approve reservations']);
+        Permission::create(['name' => 'deny reservations']);
+        Permission::create(['name' => 'make reservations']);
+
+        $organizerRole->givePermissionTo(['create events', 'edit events', 'delete events']);
+        $adminRole->givePermissionTo(['approve reservations', 'deny reservations']);
+        $spectatorRole->givePermissionTo('make reservations');
     }
 }

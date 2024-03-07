@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reservation extends Model
 {
@@ -14,4 +15,14 @@ class Reservation extends Model
         "user_id",
         "status"
     ];
+
+    public function user() :BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function event() :BelongsTo
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

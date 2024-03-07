@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            //     "event_id",
-            // "user_id",
-            // "status"
             $table->foreignId('event_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->enum('status', ['pending', 'aproved', 'cancelled', 'denied'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'cancelled', 'denied'])->default('pending');
             $table->timestamps();
         });
     }

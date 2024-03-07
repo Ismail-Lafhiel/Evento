@@ -6,6 +6,8 @@ use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ReservationController;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +20,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
- 
+
 Route::get('/', function () {
-    return view('home');
+    $events = Event::orderBy("created_at", "desc")->paginate(3);
+    return view('home', compact("events"));
 })->name('home');
 
 Route::get('/company', function () {
@@ -28,11 +31,13 @@ Route::get('/company', function () {
 })->name('company');
 
 Route::get('/discover-events', function () {
-    return view('events');
+    $events = Event::orderBy("created_at", "desc")->paginate(10);
+    return view('events', compact("events"));
 })->name('discover-events');
 
-Route::get('/event', function () {
-    return view('event');
+Route::get('/event/{id}', function ($id) {
+    $event = Event::findOrFail($id);
+    return view('event', compact('event'));
 })->name('event');
 
 Route::get('/contact', function () {
@@ -67,6 +72,24 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
 
     //category route
     Route::resource('/categories', CategoryController::class);
-    Route::resource('/events', EventController::class);
-
 });
+// events route
+// Route::resource('/events', EventController::class)->middleware(['auth', 'role:admin|organizer']);
+// Route::post('/approve-reservation/{reservation}', [EventController::class, 'approveReservation'])
+//     ->name('approve-reservation');
+
+// Route::post('/deny-reservation/{reservation}', [EventController::class, 'denyReservation'])
+//     ->name('deny-reservation');
+
+Route::middleware(['auth', 'role:admin|organizer'])->group(function () {
+    Route::resource('/events', EventController::class);
+    Route::post('/approve-reservation/{reservation}', [EventController::class, 'approveReservation'])
+        ->name('approve-reservation');
+    Route::post('/deny-reservation/{reservation}', [EventController::class, 'denyReservation'])
+        ->name('deny-reservation');
+});
+
+// reservation route
+Route::post('/book-now/{eventId}', [ReservationController::class, 'bookNow'])
+    ->name('book.now')
+    ->middleware(['auth', 'role:spectator']);

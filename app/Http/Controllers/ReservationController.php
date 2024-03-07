@@ -2,64 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Reservation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReservationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function bookNow(Request $request, $eventId)
     {
-        //
-    }
+        if (Gate::denies('make reservations')) {
+            abort(403, 'Permission denied');
+        }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        $event = Event::findOrFail($eventId);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $existingReservation = Reservation::where('event_id', $event->id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Reservation $reservation)
-    {
-        //
-    }
+        if ($existingReservation) {
+            return redirect()->back()->with('warning', "You have already booked {$existingReservation->event->title}.");
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Reservation $reservation)
-    {
-        //
-    }
+        $systemDate = Carbon::now();
+        $eventDate = Carbon::parse($event->event_date);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Reservation $reservation)
-    {
-        //
-    }
+        if ($systemDate->greaterThan($eventDate)) {
+            $status = 'cancelled';
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
+            return redirect()->back()->with('error', 'The event date has passed. Reservation is cancelled.');
+        } else {
+            $status = ($event->reservation_status == 'automatic') ? 'approved' : 'pending';
+        }
+
+        $reservation = Reservation::create([
+            'event_id' => $event->id,
+            'user_id' => auth()->user()->id,
+            'status' => $status,
+        ]);
+
+        return redirect()->back()->with('success', "{$reservation->event->title} created successfully");
     }
 }

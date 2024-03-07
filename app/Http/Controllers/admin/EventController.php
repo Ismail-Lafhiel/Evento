@@ -5,7 +5,9 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
 {
@@ -14,9 +16,10 @@ class EventController extends Controller
      */
     public function index()
     {
+
         $categories = Category::all();
         $events = Event::orderBy("created_at", "desc")->paginate(10);
-        return view("admin.events.index", compact("events", "categories"));
+        return view("events.index", compact("events", "categories"));
     }
 
     /**
@@ -24,6 +27,9 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        if (Gate::denies('create events')) {
+            abort(403, 'Permission denied');
+        }
         $validated = $request->validate([
             "title" => "required|min:5",
             "description" => "required|min:50|max:150",
@@ -39,7 +45,7 @@ class EventController extends Controller
             $validated['event_img'] = str_replace('public/', '', $imagePath);
         }
         $event = Event::create($validated);
-        return redirect()->route('admin.events.index')->with('success', 'Event created successfully');
+        return redirect()->route('events.index')->with('success', 'Event created successfully');
     }
 
     /**
@@ -47,7 +53,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return view("admin.events.show", compact("event"));
+        return view("events.show", compact("event"));
     }
 
     /**
@@ -56,7 +62,7 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         $categories = Category::all();
-        return view("admin.events.edit", compact("event", "categories"));
+        return view("events.edit", compact("event", "categories"));
     }
 
     /**
@@ -64,6 +70,9 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
+        if (Gate::denies('edit events')) {
+            abort(403, 'Permission denied');
+        }
         $validated = $request->validate([
             "title" => "required|min:5",
             "description" => "required|min:50|max:150",
@@ -79,7 +88,7 @@ class EventController extends Controller
             $validated['event_img'] = str_replace('public/', '', $imagePath);
         }
         $event->update($validated);
-        return redirect()->route("admin.events.index", $event)->with("success", "Event updated successfully");
+        return redirect()->route("events.index", $event)->with("success", "Event updated successfully");
     }
 
     /**
@@ -87,9 +96,34 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
+        if (Gate::denies('delete events')) {
+            abort(403, 'Permission denied');
+        }
         $event->delete();
         session()->flash('success', "Event is deleted successfully");
 
         return response()->json(['success' => true, 'message' => "Event deleted successfully"]);
+    }
+
+    public function approveReservation(Reservation $reservation)
+    {
+        if (Gate::denies('approve reservations')) {
+            abort(403, 'Permission denied');
+        }
+
+        $reservation->update(['status' => 'approved']);
+
+        return redirect()->back()->with('success',"{$reservation->event->title} is approved");
+    }
+
+    public function denyReservation(Reservation $reservation)
+    {
+        if (Gate::denies('deny reservations')) {
+            abort(403, 'Permission denied');
+        }
+
+        $reservation->update(['status' => 'denied']);
+
+        return redirect()->back()->with('success',"{$reservation->event->title} is denied");
     }
 }
