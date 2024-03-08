@@ -10,7 +10,7 @@
             @if (session()->has('success'))
                 <div id="alert-3"
                     class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
-                    categorie="alert">
+                    role="alert">
                     <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -35,7 +35,7 @@
             @if (session()->has('message'))
                 <div id="alert-3"
                     class="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-400"
-                    categorie="alert">
+                    role="alert">
                     <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -60,7 +60,7 @@
             @if (session()->has('error'))
                 <div id="alert-3"
                     class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                    categorie="alert">
+                    role="alert">
                     <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor" viewBox="0 0 20 20">
                         <path

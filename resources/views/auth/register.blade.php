@@ -31,8 +31,7 @@
                 </span>
             </div>
         </div>
-        <div class="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0"
-            style="background-color: #161616;">
+        <div class="lg:w-1/2 w-full flex items-center justify-center text-center md:px-16 px-0 z-0 bg-gray-50">
             <div class="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center"
                 style="background-image: url(https://images.unsplash.com/photo-1577495508048-b635879837f1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80);">
                 <div class="absolute bg-black opacity-60 inset-0 z-0"></div>
@@ -42,47 +41,36 @@
                     <x-authentication-card-logo />
                 </h1>
                 <x-validation-errors class="mb-4" />
-                <div class="py-6 space-x-2">
-                    <span
-                        class="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white">f</span>
-                    <span
-                        class="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white">G+</span>
-                    <span
-                        class="w-10 h-10 items-center justify-center inline-flex rounded-full font-bold text-lg border-2 border-white">in</span>
-                </div>
-                <p class="text-gray-100">
-                    or register here
-                </p>
                 <form method="POST" action="{{ route('register') }}" class="sm:w-2/3 w-full px-4 lg:px-0 mx-auto">
                     @csrf
                     <div class="pb-2 pt-4">
                         <x-input id="name" class="block mt-1 w-full" type="text" name="name"
                             :value="old('name')" required autofocus autocomplete="name" placeholder='Name'
-                            class="block w-full p-4 text-lg rounded-sm bg-black" />
+                            class="block w-full p-4 text-lg rounded-sm text-gray-500 bg-gray-50" />
                     </div>
                     <div class="pb-2 pt-4">
                         <x-input id="email" class="block mt-1 w-full" type="email" name="email"
                             :value="old('email')" required autocomplete="username" placeholder='Email'
-                            class="block w-full p-4 text-lg rounded-sm bg-black" />
+                            class="block w-full p-4 text-lg rounded-sm text-gray-500 bg-gray-50" />
                     </div>
                     <div class="pb-2 pt-4">
                         <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
                             autocomplete="new-password" placeholder='Password'
-                            class="block w-full p-4 text-lg rounded-sm bg-black" />
+                            class="block w-full p-4 text-lg rounded-sm text-gray-500 bg-gray-50" />
                     </div>
                     <div class="pb-2 pt-4">
                         <x-input id="password_confirmation" class="block mt-1 w-full" type="password"
                             name="password_confirmation" required autocomplete="new-password"
-                            placeholder='Confirm Password' class="block w-full p-4 text-lg rounded-sm bg-black" />
+                            placeholder='Confirm Password' class="block w-full p-4 text-lg rounded-sm text-gray-500 bg-gray-50" />
                     </div>
                     <div class="pb-2 pt-4 flex">
-                        <div class="flex items-center w-1/2 ps-4 border border-gray-200 rounded dark:border-gray-700">
+                        <div class="flex items-center w-1/2 ps-4 dark:border-gray-700">
                             <input id="bordered-radio-1" type="radio" name="role" value="organizer"
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                             <label for="bordered-radio-1"
                                 class="w-full py-4 ms-2 text-md font-medium text-gray-500 dark:text-gray-300">Organizer</label>
                         </div>
-                        <div class="flex items-center w-1/2 ps-4 border border-gray-200 rounded dark:border-gray-700">
+                        <div class="flex items-center w-1/2 ps-4 dark:border-gray-700">
                             <input checked id="bordered-radio-2" type="radio" name="role" value="spectator" checked
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                             <label for="bordered-radio-2"
@@ -116,19 +104,15 @@
                             </x-label>
                         </div>
                     @endif
-                    <div class="text-right text-gray-400 hover:underline hover:text-gray-100">
+                    <div class="text-right text-gray-400 hover:underline hover:text-gray-700">
                         <a href="{{ route('login') }}">
                             {{ __('Already registered?') }}
                         </a>
                     </div>
                     <div class="px-4 pb-2 pt-4">
                         <button
-                            class="uppercase block w-full p-4 text-lg rounded-full bg-indigo-500 hover:bg-indigo-600 focus:outline-none">
+                            class="uppercase block w-full p-4 text-lg rounded-full bg-primary-500 hover:bg-primary-700 focus:outline-none">
                             {{ __('Register') }}</button>
-                        {{-- <x-button
-                            class="uppercase py-4 rounded-full text-center block w-full p-4 text-lg bg-indigo-500 hover:bg-indigo-600 focus:outline-none">
-                            {{ __('Register') }}
-                        </x-button> --}}
                     </div>
 
                     <div class="p-4 text-center right-0 left-0 flex justify-center space-x-4 mt-16 lg:hidden ">

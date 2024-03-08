@@ -4,7 +4,10 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ReservationController;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,17 +22,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $events = Event::orderBy("created_at", "desc")->paginate(3);
+    return view('home', compact("events"));
+})->name('home');
+
+Route::get('/company', function () {
+    return view('company');
+})->name('company');
+
+Route::get('/discover-events', function () {
+    $events = Event::orderBy("created_at", "desc")->paginate(10);
+    return view('events', compact("events"));
+})->name('discover-events');
+
+Route::get('/event/{id}', function ($id) {
+    $event = Event::findOrFail($id);
+    return view('event', compact('event'));
+})->name('event');
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/profile', [UserController::class, 'profileInfo'])->name('user_profile');
 });
 
 Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(function () {
@@ -51,3 +71,23 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     //category route
     Route::resource('/categories', CategoryController::class);
 });
+// events route
+// Route::resource('/events', EventController::class)->middleware(['auth', 'role:admin|organizer']);
+// Route::post('/approve-reservation/{reservation}', [EventController::class, 'approveReservation'])
+//     ->name('approve-reservation');
+
+// Route::post('/deny-reservation/{reservation}', [EventController::class, 'denyReservation'])
+//     ->name('deny-reservation');
+
+Route::middleware(['auth', 'role:admin|organizer'])->group(function () {
+    Route::resource('/events', EventController::class);
+    Route::post('/approve-reservation/{reservation}', [EventController::class, 'approveReservation'])
+        ->name('approve-reservation');
+    Route::post('/deny-reservation/{reservation}', [EventController::class, 'denyReservation'])
+        ->name('deny-reservation');
+});
+
+// reservation route
+Route::post('/book-now/{eventId}', [ReservationController::class, 'bookNow'])
+    ->name('book.now')
+    ->middleware(['auth', 'role:spectator']);

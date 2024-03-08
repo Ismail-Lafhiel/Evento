@@ -37,7 +37,6 @@ class CreateNewUser implements CreatesNewUsers
         } else {
             $user->assignRole('spectator');
         }
-
         return $user;
     }
 }
