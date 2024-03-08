@@ -46,6 +46,9 @@
                 </x-admin-link>
                 <x-admin-link :active="request()->routeIs('admin.users.index')" href="{{ route('admin.users.index') }}">Users
                 </x-admin-link>
+                <x-admin-link :active="request()->routeIs('admin.categories.index')" href="{{ route('admin.categories.index') }}">Categories
+                </x-admin-link>
+                <x-admin-link :active="request()->routeIs('admin.events.index')" href="{{ route('admin.events.index') }}">Events</x-admin-link>
                 <div @click.away="open = false" class="relative" x-data="{ open: false }">
                     <button @click="open = !open"
                         class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark:bg-transparent dark:focus:text-white dark:hover:text-white dark:focus:bg-primary-600 dark:hover:bg-primary-600 md:block hover:text-primary-900 focus:text-primary-900 hover:bg-primary-200 focus:bg-primary-200 focus:outline-none focus:shadow-outline">
@@ -65,12 +68,12 @@
                         x-transition:leave-end="transform opacity-0 scale-95"
                         class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
                         <div class="px-2 py-2 bg-white rounded-md shadow dark:bg-gray-700">
+                            <x-dropdown-link href="{{ route('profile.show') }}"
+                                class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-primary-600 dark:focus:text-white dark:hover:text-white dark:text-primary-200 md:mt-0 hover:text-primary-900 focus:text-primary-900 hover:bg-primary-200 focus:bg-primary-200 focus:outline-none focus:shadow-outline">
+                                {{ __('Profile') }}
+                            </x-dropdown-link>
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
-                                <x-dropdown-link href="{{ route('profile.show') }}"
-                                    class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-primary-600 dark:focus:text-white dark:hover:text-white dark:text-primary-200 md:mt-0 hover:text-primary-900 focus:text-primary-900 hover:bg-primary-200 focus:bg-primary-200 focus:outline-none focus:shadow-outline">
-                                    {{ __('Profile') }}
-                                </x-dropdown-link>
                                 <x-dropdown-link href="{{ route('logout') }}"
                                     class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-primary-600 dark:focus:bg-primary-600 dark:focus:text-white dark:hover:text-white dark:text-primary-200 md:mt-0 hover:text-primary-900 focus:text-primary-900 hover:bg-primary-200 focus:bg-primary-200 focus:outline-none focus:shadow-outline"
                                     @click.prevent="$root.submit();">

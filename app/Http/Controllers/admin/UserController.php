@@ -28,11 +28,11 @@ class UserController extends Controller
     public function assignRole(Request $request, User $user)
     {
         if ($user->hasRole($request->role)) {
-            return redirect()->back()->with("error', 'Role does't exist");
+            return redirect()->back()->with("error", "Role does't exist");
         }
 
         $user->assignRole($request->role);
-        return redirect()->back()->with("success', 'Role assigned successfully");
+        return redirect()->back()->with("success", "Role assigned successfully");
     }
 
     public function removeRole(User $user, Role $role)

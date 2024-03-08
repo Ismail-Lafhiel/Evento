@@ -83,6 +83,7 @@
                 </div>
             @endif
             <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+
                 <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
                     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                         <div
@@ -118,7 +119,7 @@
                                             <path clip-rule="evenodd" fill-rule="evenodd"
                                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                         </svg>
-                                        Add Permission
+                                        Add Event
                                     </button>
 
                                     <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
@@ -156,23 +157,33 @@
                                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th scope="col" class="px-4 py-3">id</th>
-                                        <th scope="col" class="px-4 py-3">Name</th>
+                                        <th scope="col" class="px-4 py-3">Title</th>
+                                        <th scope="col" class="px-4 py-3">event date</th>
+                                        <th scope="col" class="px-4 py-3">location</th>
+                                        <th scope="col" class="px-4 py-3">category</th>
+                                        <th scope="col" class="px-4 py-3">seats number</th>
+                                        <th scope="col" class="px-4 py-3">Reservation Status</th>
                                         <th scope="col" class="px-4 py-3">
                                             <span class="sr-only">Actions</span>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (isset($permissions) && $permissions)
-                                        @foreach ($permissions as $permission)
+                                    @if (isset($events) && $events)
+                                        @foreach ($events as $event)
                                             <tr class="border-b dark:border-gray-700">
-                                                <td class="px-4 py-3">{{ $permission->id }}</td>
+                                                <td class="px-4 py-3">{{ $event->id }}</td>
                                                 <th scope="row"
                                                     class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ $permission->name }}</th>
+                                                    {{ $event->title }}</th>
+                                                <td class="px-4 py-3">{{ $event->event_date }}</td>
+                                                <td class="px-4 py-3">{{ $event->location }}</td>
+                                                <td class="px-4 py-3">{{ $event->category->category_name }}</td>
+                                                <td class="px-4 py-3">{{ $event->seats_number }}</td>
+                                                <td class="px-4 py-3">{{ $event->reservation_status }}</td>
                                                 <td class="px-4 py-3 flex items-center justify-end">
-                                                    <button id="{{ $permission->id }}-dropdown-button"
-                                                        data-dropdown-toggle="{{ $permission->id }}-dropdown"
+                                                    <button id="{{ $event->id }}-dropdown-button"
+                                                        data-dropdown-toggle="{{ $event->id }}-dropdown"
                                                         class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                                                         type="button">
                                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -181,19 +192,23 @@
                                                                 d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                         </svg>
                                                     </button>
-                                                    <div id="{{ $permission->id }}-dropdown"
+                                                    <div id="{{ $event->id }}-dropdown"
                                                         class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                                            aria-labelledby="{{ $permission->id }}-dropdown-button">
+                                                            aria-labelledby="{{ $event->id }}-dropdown-button">
                                                             <li>
-                                                                <a href="{{ route('admin.permissions.edit', $permission->id) }}"
+                                                                <a href="{{ route('admin.events.show', $event->id) }}"
+                                                                    class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="{{ route('admin.events.edit', $event->id) }}"
                                                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                             </li>
                                                         </ul>
                                                         <a id="deleteButton" data-modal-target="deleteModal"
                                                             data-modal-toggle="deleteModal"
-                                                            data-record-id="{{ $permission->id }}"
-                                                            data-action="{{ route('admin.permissions.destroy', $permission->id) }}"
+                                                            data-record-id="{{ $event->id }}"
+                                                            data-action="{{ route('admin.events.destroy', $event->id) }}"
                                                             class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                                             Delete
                                                         </a>
@@ -223,7 +238,7 @@
                     <div
                         class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                            Add Permission
+                            Add event
                         </h3>
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -238,20 +253,109 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <form id="roleForm" action="{{ route('admin.permissions.store') }}" method="POST">
+                    @if ($errors->any())
+                        <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                            role="alert">
+                            <svg class="flex-shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                            </svg>
+                            <span class="sr-only">Danger</span>
+                            <div>
+                                <span class="font-medium">Ensure that these requirements are met:</span>
+                                <ul class="mt-1.5 list-disc list-inside">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
+                    <form id="roleForm" action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                        <div class="grid gap-6 mb-6 md:grid-cols-2">
                             <div class="sm:col-span-2">
-                                <label for="name"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Permission
+                                <label for="title"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
                                     Name</label>
-                                <input type="text" name="name" id="name"
+                                <input type="text" name="title" id="title"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type permission name">
-                                <p id="outlined_error_help" style="display: none;"
-                                    class="mt-2 text-xs text-red-600 dark:text-red-400">
-                                    <span class="font-medium">Oh, snapp!</span> The name field is required.
-                                </p>
+                                    placeholder="Type event title">
+
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label for="description"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
+                                    Description</label>
+                                <textarea id="description" name="description" rows="4"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Type event description"></textarea>
+                            </div>
+                            <div>
+                                <label for="location"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
+                                    Location</label>
+                                <input type="text" name="location" id="location"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Type event location">
+                            </div>
+                            <div>
+                                <label for="seats_number"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of
+                                    seats</label>
+                                <input type="text" name="seats_number" id="seats_number"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Type number of seats">
+                            </div>
+                            <div>
+                                <label for="category"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
+                                    Category</label>
+                                <select id="category" name="category_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option selected disabled>Choose a category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label for="event_img"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
+                                    Image</label>
+                                <input
+                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                    id="event_img" name="event_img" type="file">
+                            </div>
+                            <div>
+                                <label for="event_date"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
+                                    Date</label>
+                                <input datepicker type="date" name="event_date" id="event_date"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Select date">
+                            </div>
+                            <div>
+                                <label for="reservation_status"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose how you
+                                    want this reservation to be</label>
+                                <div class="flex align-middle space-x-5">
+                                    <div class="flex items-center mt-3">
+                                        <input id="automatic" type="radio" value="automatic"
+                                            name="reservation_status"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="automatic"
+                                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Automatic</label>
+                                    </div>
+                                    <div class="flex items-center mt-3">
+                                        <input checked id="manual" type="radio" value="manual"
+                                            name="reservation_status"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="manual"
+                                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Manual</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <button type="submit"
@@ -262,7 +366,7 @@
                                     d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            Add new permission
+                            Add new event
                         </button>
                     </form>
                 </div>
