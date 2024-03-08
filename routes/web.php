@@ -4,6 +4,11 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\ReservationController;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,18 +22,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [IndexController::class, 'index'])->name('home');
+Route::get('/company', [IndexController::class, 'company'])->name('company');
+Route::get('/discover-events', [IndexController::class, 'events'])->name('discover-events');
+Route::get('/event/{id}', [IndexController::class, 'event'])->name('event');
+Route::get('/contact', [IndexController::class, 'contact'])->name('contact');
+Route::post('/search/events', [IndexController::class, 'search'])->name('search.events');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/profile', [UserController::class, 'profileInfo'])->name('user_profile');
 });
 
 Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(function () {
@@ -46,4 +53,27 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     Route::delete('/users/{user}/roles/{role}', [UserController::class, 'removeRole'])->name('users.roles.remove');
     Route::post('/users/{user}/permissions', [UserController::class, 'givePermission'])->name('users.permissions');
     Route::delete('/users/{user}/permissions/{permission}', [UserController::class, 'revokePermission'])->name('users.permissions.revoke');
+
+    //category route
+    Route::resource('/categories', CategoryController::class);
 });
+// events route
+// Route::resource('/events', EventController::class)->middleware(['auth', 'role:admin|organizer']);
+// Route::post('/approve-reservation/{reservation}', [EventController::class, 'approveReservation'])
+//     ->name('approve-reservation');
+
+// Route::post('/deny-reservation/{reservation}', [EventController::class, 'denyReservation'])
+//     ->name('deny-reservation');
+
+Route::middleware(['auth', 'role:admin|organizer'])->group(function () {
+    Route::resource('/events', EventController::class);
+    Route::post('/approve-reservation/{reservation}', [EventController::class, 'approveReservation'])
+        ->name('approve-reservation');
+    Route::post('/deny-reservation/{reservation}', [EventController::class, 'denyReservation'])
+        ->name('deny-reservation');
+});
+
+// reservation route
+Route::post('/book-now/{eventId}', [ReservationController::class, 'bookNow'])
+    ->name('book.now')
+    ->middleware(['auth', 'role:spectator']);

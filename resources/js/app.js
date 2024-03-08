@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// delete role
+// delete functionality
 document.addEventListener('DOMContentLoaded', function () {
     const deleteButtons = document.querySelectorAll('[data-modal-target="deleteModal"]');
     const deleteModal = document.getElementById('deleteModal');
@@ -89,4 +89,131 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
+
+// search events
+
+// $(document).ready(function () {
+//     const searchForm = $('#searchForm');
+//     const searchInput = $('#search-dropdown');
+//     const eventGrid = $('#eventGrid');
+//     const searchResultsContainer = $('#searchResults');
+//     const searchUrl = searchForm.data('url');
+
+//     searchInput.on('input', function () {
+//         const name = searchInput.val().trim();
+//         $.ajax({
+//             url: searchUrl,
+//             method: 'POST',
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+//             },
+//             data: { name: name },
+//             dataType: 'json',
+//             success: function (data) {
+//                 if (name.length > 0) {
+//                     eventGrid.hide();
+//                 } else {
+//                     eventGrid.show();
+//                 }
+
+//                 searchResultsContainer.html('');
+
+//                 if (data.length > 0) {
+//                     data.forEach(event => {
+//                         const resultHtml = `
+//                             <div onclick="window.location.href = '${searchUrl}/event/${event.id}'"
+//                                 class="bg-gradient-to-b cursor-pointer from-primary-800 to-primary-600 text-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+//                                 <img src="storage/${event.event_img}" alt="${event.title}"
+//                                     class="w-full h-64 object-cover" />
+//                                 <div class="p-6">
+//                                     <h3 class="text-2xl font-semibold mb-2 capitalize">${event.title}</h3>
+//                                     <p class="text-sm opacity-75 capitalize truncate">${event.description}</p>
+//                                     <a href="${searchUrl}/event/${event.id}"
+//                                         class="mt-4 inline-block text-blue-200 text-sm hover:underline">Discover</a>
+//                                 </div>
+//                             </div>
+//                         `;
+
+//                         searchResultsContainer.append(resultHtml);
+//                     });
+//                 } else {
+//                     searchResultsContainer.html('<p>No results found</p>');
+//                 }
+//             },
+//             error: function (error) {
+//                 console.error('Error fetching search results:', error);
+//             }
+//         });
+//     });
+
+//     searchForm.on('submit', function (event) {
+//         event.preventDefault();
+//     });
+// });
+
+$(document).ready(function () {
+    const searchForm = $('#searchForm');
+    const searchInput = $('#search-dropdown');
+    const categoryDropdown = $('#category-dropdown');
+    const eventGrid = $('#eventGrid');
+    const searchResultsContainer = $('#searchResults');
+    const searchUrl = searchForm.data('url');
+
+    function performSearch() {
+        const name = searchInput.val().trim();
+        const category = categoryDropdown.val();
+
+        $.ajax({
+            url: searchUrl,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            data: { name: name, category: category },
+            dataType: 'json',
+            success: function (data) {
+                if (name.length > 0 || category.length > 0) {
+                    eventGrid.hide();
+                } else {
+                    eventGrid.show();
+                }
+
+                searchResultsContainer.html('');
+
+                if (data.length > 0) {
+                    data.forEach(event => {
+                        const resultHtml = `
+                            <div onclick="window.location.href = '${searchUrl}/event/${event.id}'"
+                                class="bg-gradient-to-b cursor-pointer from-primary-800 to-primary-600 text-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                <img src="storage/${event.event_img}" alt="${event.title}"
+                                    class="w-full h-64 object-cover" />
+                                <div class="p-6">
+                                    <h3 class="text-2xl font-semibold mb-2 capitalize">${event.title}</h3>
+                                    <p class="text-sm opacity-75 capitalize truncate">${event.description}</p>
+                                    <a href="${searchUrl}/event/${event.id}"
+                                        class="mt-4 inline-block text-blue-200 text-sm hover:underline">Discover</a>
+                                </div>
+                            </div>
+                        `;
+
+                        searchResultsContainer.append(resultHtml);
+                    });
+                } else {
+                    searchResultsContainer.html('<p>No results found</p>');
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching search results:', error);
+            }
+        });
+    }
+
+    searchInput.on('input', performSearch);
+    categoryDropdown.on('change', performSearch);
+
+    searchForm.on('submit', function (event) {
+        event.preventDefault();
+    });
+});
+
 

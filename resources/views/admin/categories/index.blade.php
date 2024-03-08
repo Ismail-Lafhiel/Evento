@@ -83,6 +83,7 @@
                 </div>
             @endif
             <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+
                 <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
                     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                         <div
@@ -118,7 +119,7 @@
                                             <path clip-rule="evenodd" fill-rule="evenodd"
                                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                                         </svg>
-                                        Add Permission
+                                        Add Category
                                     </button>
 
                                     <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
@@ -163,16 +164,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (isset($permissions) && $permissions)
-                                        @foreach ($permissions as $permission)
+                                    @if (isset($categories) && $categories)
+                                        @foreach ($categories as $categorie)
                                             <tr class="border-b dark:border-gray-700">
-                                                <td class="px-4 py-3">{{ $permission->id }}</td>
+                                                <td class="px-4 py-3">{{ $categorie->id }}</td>
                                                 <th scope="row"
                                                     class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    {{ $permission->name }}</th>
+                                                    {{ $categorie->category_name }}</th>
                                                 <td class="px-4 py-3 flex items-center justify-end">
-                                                    <button id="{{ $permission->id }}-dropdown-button"
-                                                        data-dropdown-toggle="{{ $permission->id }}-dropdown"
+                                                    <button id="{{ $categorie->id }}-dropdown-button"
+                                                        data-dropdown-toggle="{{ $categorie->id }}-dropdown"
                                                         class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                                                         type="button">
                                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -181,19 +182,19 @@
                                                                 d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                         </svg>
                                                     </button>
-                                                    <div id="{{ $permission->id }}-dropdown"
+                                                    <div id="{{ $categorie->id }}-dropdown"
                                                         class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                                                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                                                            aria-labelledby="{{ $permission->id }}-dropdown-button">
+                                                            aria-labelledby="{{ $categorie->id }}-dropdown-button">
                                                             <li>
-                                                                <a href="{{ route('admin.permissions.edit', $permission->id) }}"
+                                                                <a href="{{ route('admin.categories.edit', $categorie->id) }}"
                                                                     class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                             </li>
                                                         </ul>
                                                         <a id="deleteButton" data-modal-target="deleteModal"
                                                             data-modal-toggle="deleteModal"
-                                                            data-record-id="{{ $permission->id }}"
-                                                            data-action="{{ route('admin.permissions.destroy', $permission->id) }}"
+                                                            data-record-id="{{ $categorie->id }}"
+                                                            data-action="{{ route('admin.categories.destroy', $categorie->id) }}"
                                                             class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                                             Delete
                                                         </a>
@@ -223,7 +224,7 @@
                     <div
                         class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                            Add Permission
+                            Add category
                         </h3>
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -238,16 +239,16 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <form id="roleForm" action="{{ route('admin.permissions.store') }}" method="POST">
+                    <form id="roleForm" action="{{ route('admin.categories.store') }}" method="POST">
                         @csrf
                         <div class="grid gap-4 mb-4 sm:grid-cols-2">
                             <div class="sm:col-span-2">
                                 <label for="name"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Permission
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">category
                                     Name</label>
-                                <input type="text" name="name" id="name"
+                                <input type="text" name="category_name" id="name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Type permission name">
+                                    placeholder="Type category name">
                                 <p id="outlined_error_help" style="display: none;"
                                     class="mt-2 text-xs text-red-600 dark:text-red-400">
                                     <span class="font-medium">Oh, snapp!</span> The name field is required.
@@ -262,7 +263,7 @@
                                     d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            Add new permission
+                            Add new category
                         </button>
                     </form>
                 </div>
