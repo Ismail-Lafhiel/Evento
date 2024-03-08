@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ReservationController;
 use App\Models\Event;
 use Illuminate\Support\Facades\Route;
@@ -21,28 +22,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $events = Event::orderBy("created_at", "desc")->paginate(3);
-    return view('home', compact("events"));
-})->name('home');
 
-Route::get('/company', function () {
-    return view('company');
-})->name('company');
-
-Route::get('/discover-events', function () {
-    $events = Event::orderBy("created_at", "desc")->paginate(10);
-    return view('events', compact("events"));
-})->name('discover-events');
-
-Route::get('/event/{id}', function ($id) {
-    $event = Event::findOrFail($id);
-    return view('event', compact('event'));
-})->name('event');
-
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
+Route::get('/', [IndexController::class, 'index'])->name('home');
+Route::get('/company', [IndexController::class, 'company'])->name('company');
+Route::get('/discover-events', [IndexController::class, 'events'])->name('discover-events');
+Route::get('/event/{id}', [IndexController::class, 'event'])->name('event');
+Route::get('/contact', [IndexController::class, 'contact'])->name('contact');
+Route::post('/search/events', [IndexController::class, 'search'])->name('search.events');
 
 Route::middleware([
     'auth:sanctum',

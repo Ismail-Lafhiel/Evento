@@ -73,9 +73,9 @@
                 </div>
 
                 <div class="flex justify-center">
-                    <button type="button"
+                    <a href="{{ route('discover-events') }}"
                         class="text-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-primary-100 focus:ring-4 focus:ring-primary-100 font-medium text-sm px-6 py-3 rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-primary-700 dark:hover:border-primary-600 dark:focus:ring-primary-700">Discover
-                        more</button>
+                        more</a>
                 </div>
             </div>
         </section>
