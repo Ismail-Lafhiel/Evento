@@ -253,4 +253,5 @@
                     more...</a>
             </div>
     </section>
+    <x-footer/>
 </x-guest-layout>

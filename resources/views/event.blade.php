@@ -80,32 +80,27 @@
             <div class="grid items-start grid-cols-1 lg:grid-cols-2 gap-10">
                 <div class="w-full lg:sticky top-0 text-center">
                     <div class="lg:h-[600px]">
-                        <img src="https://readymadeui.com/images/product6.webp" alt="Product"
+                        <img src="{{asset("storage/".$event->event_img)}}" alt="Product"
                             class="lg:w-11/12 w-full h-full rounded-xl object-cover object-top" />
-                    </div>
-                    <div class="flex flex-wrap gap-x-8 gap-y-6 justify-center mx-auto mt-6">
-                        <img src="https://readymadeui.com/images/product6.webp" alt="Product1"
-                            class="w-20 cursor-pointer rounded-xl outline" />
-                        <img src="https://readymadeui.com/images/product8.webp" alt="Product2"
-                            class="w-20 cursor-pointer rounded-xl" />
-                        <img src="https://readymadeui.com/images/product5.webp" alt="Product3"
-                            class="w-20 cursor-pointer rounded-xl" />
-                        <img src="https://readymadeui.com/images/product7.webp" alt="Product4"
-                            class="w-20 cursor-pointer rounded-xl" />
                     </div>
                 </div>
                 <div>
                     <div class="flex flex-wrap items-start gap-4">
                         <div>
-                            <h2 class="text-2xl font-extrabold text-gray-800">Adjective Attire | T-shirt</h2>
-                            <p class="text-sm text-gray-400 mt-2">Well-Versed Commerce</p>
+                            <h2 class="text-2xl font-extrabold text-gray-800 capitalize">{{$event->title}}</h2>
+                            <p class="text-sm text-gray-400 mt-2">{{$event->category->category_name}}</p>
                         </div>
                     </div>
                     <hr class="my-8" />
                     <div class="flex flex-wrap gap-4 items-start">
                         <div>
-                            <p class="text-gray-800 text-3xl font-bold">$30</p>
+                            <p class="text-gray-800 text-3xl font-bold">30 available seat</p>
                         </div>
+                    </div>
+                    <hr class="my-8" />
+                    <div>
+                        <p class="text-lg text-gray-600 capitalize">{{$event->location}}</p>
+                        <p class="text-sm text-gray-400 mt-2">{{$event->event_date}}</p>
                     </div>
                     <hr class="my-8" />
                     <div class="flex flex-wrap gap-4">
@@ -128,21 +123,10 @@
                         Description</li>
                 </ul>
                 <div class="mt-8">
-                    <h3 class="text-lg font-bold text-gray-800">Product Description</h3>
-                    <p class="text-sm text-gray-400 mt-4">Elevate your casual style with our premium men's t-shirt.
-                        Crafted for comfort and designed with a modern fit, this versatile shirt is an essential
-                        addition to your wardrobe. The soft and breathable fabric ensures all-day comfort, making it
-                        perfect for everyday wear. Its classic crew neck and short sleeves offer a timeless look.
+                    <h3 class="text-lg font-bold text-gray-800">Event Description</h3>
+                    <p class="text-sm text-gray-400 mt-4 capitalize">{{$event->description}}
                     </p>
                 </div>
-                <ul class="space-y-3 list-disc mt-6 pl-4 text-sm text-gray-400">
-                    <li>A gray t-shirt is a wardrobe essential because it is so versatile.</li>
-                    <li>Available in a wide range of sizes, from extra small to extra large, and even in tall and
-                        petite
-                        sizes.</li>
-                    <li>This is easy to care for. They can usually be machine-washed and dried on low heat.</li>
-                    <li>You can add your own designs, paintings, or embroidery to make it your own.</li>
-                </ul>
             </div>
         </div>
     </div>
