@@ -10,9 +10,12 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $events = Event::orderBy("created_at", "desc")->paginate(3);
+        $events = Event::whereNotIn('status', ['denied', 'pending'])
+            ->orderBy("created_at", "desc")
+            ->paginate(3);
         return view('home', compact("events"));
     }
+
     public function company()
     {
         return view('company');
@@ -21,12 +24,19 @@ class IndexController extends Controller
     public function events()
     {
         $categories = Category::get();
-        $events = Event::orderBy("created_at", "desc")->paginate(10);
+        $events = Event::whereNotIn('status', ['denied', 'pending'])
+            ->orderBy("created_at", "desc")
+            ->paginate(10);
         return view('events', compact("events", "categories"));
     }
     public function event($id)
     {
         $event = Event::findOrFail($id);
+
+        if ($event->status === 'denied' || $event->status === 'pending') {
+            return abort(404, 'Event does not exist');
+        }
+
         return view('event', compact('event'));
     }
     public function contact()

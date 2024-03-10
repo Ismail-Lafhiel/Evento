@@ -43,6 +43,10 @@ class ReservationController extends Controller
             'status' => $status,
         ]);
 
+        if ($status == 'approved') {
+            $event->decrement('seats_number');
+        }
+
         return redirect()->back()->with('success', "{$reservation->event->title} booked successfully");
     }
 }

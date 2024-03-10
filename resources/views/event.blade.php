@@ -94,7 +94,7 @@
                     <hr class="my-8" />
                     <div class="flex flex-wrap gap-4 items-start">
                         <div>
-                            <p class="text-gray-800 text-3xl font-bold">30 available seat</p>
+                            <p class="text-gray-800 text-3xl font-bold">{{$event->seats_number}} available seat</p>
                         </div>
                     </div>
                     <hr class="my-8" />

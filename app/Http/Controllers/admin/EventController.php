@@ -134,10 +134,19 @@ class EventController extends Controller
             abort(403, 'Permission denied');
         }
 
-        $reservation->update(['status' => 'approved']);
+        if ($reservation->status === 'pending') {
+            $event = $reservation->event;
 
-        return redirect()->back()->with('success', "{$reservation->event->title} is approved");
+            $reservation->update(['status' => 'approved']);
+
+            $event->decrement('seats_number');
+
+            return redirect()->back()->with('success', "{$reservation->event->title} reservation is approved");
+        }
+
+        return redirect()->back()->with('error', "Reservation is not pending");
     }
+
 
     public function denyReservation(Reservation $reservation)
     {
