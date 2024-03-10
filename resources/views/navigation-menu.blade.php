@@ -25,6 +25,11 @@
                         {{ __('Admin Panel') }}
                     </x-nav-link>
                     @endrole
+                    @role("organizer")
+                    <x-nav-link href="{{ route('events.index') }}" :active="request()->routeIs('events.index')">
+                        {{ __('Events') }}
+                    </x-nav-link>
+                    @endrole
                 </div>
             </div>
 

@@ -53,7 +53,8 @@ class IndexController extends Controller
         $name = $request->input('name');
         $category = $request->input('category');
 
-        $query = Event::query();
+        $query = Event::whereNotIn('status', ['denied', 'pending'])
+            ->orderBy('created_at', 'desc');
 
         if ($name) {
             $query->where('title', 'like', "%$name%");
