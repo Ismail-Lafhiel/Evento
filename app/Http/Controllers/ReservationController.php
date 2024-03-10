@@ -47,6 +47,10 @@ class ReservationController extends Controller
             $event->decrement('seats_number');
         }
 
+        if ($status == 'pending' && $event->reservation_status == 'manual') {
+            return redirect()->back()->with('success', 'Your reservation is pending. Please wait for the organizer to confirm it.');
+        }
+
         return redirect()->back()->with('success', "{$reservation->event->title} booked successfully");
     }
 }
