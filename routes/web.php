@@ -67,6 +67,12 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
 
 Route::middleware(['auth', 'role:admin|organizer'])->group(function () {
     Route::resource('/events', EventController::class);
+    // approve or deny events
+    Route::post('/approve-event/{event}', [EventController::class, 'approveEvents'])
+        ->name('approve-event');
+    Route::post('/deny-event/{event}', [EventController::class, 'denyEvents'])
+        ->name('deny-event');
+    // approve or deny reservations
     Route::post('/approve-reservation/{reservation}', [EventController::class, 'approveReservation'])
         ->name('approve-reservation');
     Route::post('/deny-reservation/{reservation}', [EventController::class, 'denyReservation'])

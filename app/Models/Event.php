@@ -20,7 +20,8 @@ class Event extends Model
         "category_id",
         "seats_number",
         "reservation_status",
-        "user_id"
+        "user_id",
+        "status"
     ];
     public function category(): BelongsTo
     {

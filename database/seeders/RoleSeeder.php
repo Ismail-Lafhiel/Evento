@@ -21,12 +21,14 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'create events']);
         Permission::create(['name' => 'edit events']);
         Permission::create(['name' => 'delete events']);
+        Permission::create(['name' => 'approve events']);
+        Permission::create(['name' => 'deny events']);
         Permission::create(['name' => 'approve reservations']);
         Permission::create(['name' => 'deny reservations']);
         Permission::create(['name' => 'make reservations']);
 
-        $organizerRole->givePermissionTo(['create events', 'edit events', 'delete events']);
-        $adminRole->givePermissionTo(['approve reservations', 'deny reservations']);
+        $organizerRole->givePermissionTo(['create events', 'edit events', 'delete events', 'approve reservations', 'deny reservations']);
+        $adminRole->givePermissionTo(['approve events', 'deny events']);
         $spectatorRole->givePermissionTo('make reservations');
     }
 }

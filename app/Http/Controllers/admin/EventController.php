@@ -33,7 +33,7 @@ class EventController extends Controller
         }
         $validated = $request->validate([
             "title" => "required|min:5",
-            "description" => "required|min:50|max:150",
+            "description" => "required|min:50|max:250",
             "event_img" => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             "event_date" => "required|date",
             "location" => "required",
@@ -77,7 +77,7 @@ class EventController extends Controller
         }
         $validated = $request->validate([
             "title" => "required|min:5",
-            "description" => "required|min:50|max:150",
+            "description" => "required|min:50|max:250",
             "event_img" => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             "event_date" => "required|date",
             "location" => "required",
@@ -106,6 +106,27 @@ class EventController extends Controller
 
         return response()->json(['success' => true, 'message' => "Event deleted successfully"]);
     }
+    public function approveEvents(Event $event)
+    {
+        if (Gate::denies('approve events')) {
+            abort(403, 'Permission denied');
+        }
+
+        $event->update(['status' => 'approved']);
+
+        return redirect()->back()->with('success', "{$event->title} is approved");
+    }
+
+    public function denyEvents(Event $event)
+    {
+        if (Gate::denies('deny events')) {
+            abort(403, 'Permission denied');
+        }
+
+        $event->update(['status' => 'denied']);
+
+        return redirect()->back()->with('success', "{$event->title} is denied");
+    }
 
     public function approveReservation(Reservation $reservation)
     {
@@ -115,7 +136,7 @@ class EventController extends Controller
 
         $reservation->update(['status' => 'approved']);
 
-        return redirect()->back()->with('success',"{$reservation->event->title} is approved");
+        return redirect()->back()->with('success', "{$reservation->event->title} is approved");
     }
 
     public function denyReservation(Reservation $reservation)
@@ -126,6 +147,6 @@ class EventController extends Controller
 
         $reservation->update(['status' => 'denied']);
 
-        return redirect()->back()->with('success',"{$reservation->event->title} is denied");
+        return redirect()->back()->with('success', "{$reservation->event->title} is denied");
     }
 }
