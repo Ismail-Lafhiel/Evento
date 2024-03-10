@@ -80,27 +80,27 @@
             <div class="grid items-start grid-cols-1 lg:grid-cols-2 gap-10">
                 <div class="w-full lg:sticky top-0 text-center">
                     <div class="lg:h-[600px]">
-                        <img src="{{asset("storage/".$event->event_img)}}" alt="Product"
+                        <img src="{{ asset('storage/' . $event->event_img) }}" alt="Product"
                             class="lg:w-11/12 w-full h-full rounded-xl object-cover object-top" />
                     </div>
                 </div>
                 <div>
                     <div class="flex flex-wrap items-start gap-4">
                         <div>
-                            <h2 class="text-2xl font-extrabold text-gray-800 capitalize">{{$event->title}}</h2>
-                            <p class="text-sm text-gray-400 mt-2">{{$event->category->category_name}}</p>
+                            <h2 class="text-2xl font-extrabold text-gray-800 capitalize">{{ $event->title }}</h2>
+                            <p class="text-sm text-gray-400 mt-2">{{ $event->category->category_name }}</p>
                         </div>
                     </div>
                     <hr class="my-8" />
                     <div class="flex flex-wrap gap-4 items-start">
                         <div>
-                            <p class="text-gray-800 text-3xl font-bold">{{$event->seats_number}} available seat</p>
+                            <p class="text-gray-800 text-3xl font-bold">{{ $event->seats_number }} available seat</p>
                         </div>
                     </div>
                     <hr class="my-8" />
                     <div>
-                        <p class="text-lg text-gray-600 capitalize">{{$event->location}}</p>
-                        <p class="text-sm text-gray-400 mt-2">{{$event->event_date}}</p>
+                        <p class="text-lg text-gray-600 capitalize">{{ $event->location }}</p>
+                        <p class="text-sm text-gray-400 mt-2">{{ $event->event_date }}</p>
                     </div>
                     <hr class="my-8" />
                     <div class="flex flex-wrap gap-4">
@@ -114,6 +114,11 @@
                             class="min-w-[200px] text-center px-4 py-2.5 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-bold rounded">Go
                             back</a>
                     </div>
+                    <hr class="my-8" />
+                    <div>
+                        <p class="text-lg text-gray-600 capitalize">Owner</p>
+                        <p class="text-sm text-gray-400 mt-2">{{ $event->user->name }}</p>
+                    </div>
                 </div>
             </div>
             <div class="mt-24 max-w-4xl">
@@ -124,7 +129,7 @@
                 </ul>
                 <div class="mt-8">
                     <h3 class="text-lg font-bold text-gray-800">Event Description</h3>
-                    <p class="text-sm text-gray-400 mt-4 capitalize">{{$event->description}}
+                    <p class="text-sm text-gray-400 mt-4 capitalize">{{ $event->description }}
                     </p>
                 </div>
             </div>

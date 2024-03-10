@@ -15,6 +15,16 @@
                     <x-nav-link href="{{ route('user_profile') }}" :active="request()->routeIs('user_profile')">
                         {{ __('Profile') }}
                     </x-nav-link>
+                    @role("spectator")
+                    <x-nav-link href="{{ route('userReservations') }}" :active="request()->routeIs('userReservations')">
+                        {{ __('Reservations') }}
+                    </x-nav-link>
+                    @endrole
+                    @role("admin")
+                    <x-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.index')">
+                        {{ __('Admin Panel') }}
+                    </x-nav-link>
+                    @endrole
                 </div>
             </div>
 

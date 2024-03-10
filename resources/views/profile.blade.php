@@ -49,6 +49,21 @@
                                         </div>
                                         <div class="mr-4 p-3 text-center">
                                             <span
+                                                class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ $approvedEvents }}</span><span
+                                                class="text-sm text-blueGray-400">Approved Events</span>
+                                        </div>
+                                        <div class="mr-4 p-3 text-center">
+                                            <span
+                                                class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ $deniedEvents }}</span><span
+                                                class="text-sm text-blueGray-400">Denied Events</span>
+                                        </div>
+                                        <div class="mr-4 p-3 text-center">
+                                            <span
+                                                class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ $numberOfApplications }}</span><span
+                                                class="text-sm text-blueGray-400">Bookings Received</span>
+                                        </div>
+                                        <div class="mr-4 p-3 text-center">
+                                            <span
                                                 class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{ $numberOfApplications }}</span><span
                                                 class="text-sm text-blueGray-400">Bookings Received</span>
                                         </div>
@@ -144,5 +159,6 @@
                 </div>
             </div>
         </section>
+        <x-footer/>
     </main>
 </x-app-layout>

@@ -36,6 +36,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/profile', [UserController::class, 'profileInfo'])->name('user_profile');
+    Route::get('/reservations', [UserController::class, 'userReservations'])->name('userReservations')->middleware('role:spectator');
 });
 
 Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(function () {
@@ -57,13 +58,6 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     //category route
     Route::resource('/categories', CategoryController::class);
 });
-// events route
-// Route::resource('/events', EventController::class)->middleware(['auth', 'role:admin|organizer']);
-// Route::post('/approve-reservation/{reservation}', [EventController::class, 'approveReservation'])
-//     ->name('approve-reservation');
-
-// Route::post('/deny-reservation/{reservation}', [EventController::class, 'denyReservation'])
-//     ->name('deny-reservation');
 
 Route::middleware(['auth', 'role:admin|organizer'])->group(function () {
     Route::resource('/events', EventController::class);
