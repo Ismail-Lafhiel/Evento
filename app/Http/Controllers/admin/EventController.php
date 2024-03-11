@@ -18,8 +18,15 @@ class EventController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        if ($user->hasRole('admin')) {
+            $events = Event::orderBy("created_at", "desc")->paginate(10);
+        } else {
+            $events = $user->events()->orderBy("created_at", "desc")->paginate(10);
+        }
+
         $categories = Category::all();
-        $events = Event::orderBy("created_at", "desc")->paginate(10);
+
         return view("events.index", compact("events", "categories"));
     }
 
@@ -123,9 +130,6 @@ class EventController extends Controller
         if (Gate::denies('approve events')) {
             abort(403, 'Permission denied');
         }
-        if (Auth::id() !== $event->user_id) {
-            abort(403, 'Permission denied');
-        }
         $event->update(['status' => 'approved']);
 
         return redirect()->back()->with('success', "{$event->title} is approved");
@@ -134,9 +138,6 @@ class EventController extends Controller
     public function denyEvents(Event $event)
     {
         if (Gate::denies('deny events')) {
-            abort(403, 'Permission denied');
-        }
-        if (Auth::id() !== $event->user_id) {
             abort(403, 'Permission denied');
         }
         $event->update(['status' => 'denied']);
@@ -149,10 +150,6 @@ class EventController extends Controller
         if (Gate::denies('approve reservations')) {
             abort(403, 'Permission denied');
         }
-        if (Auth::id() !== $reservation->user_id) {
-            abort(403, 'Permission denied');
-        }
-
         if ($reservation->status === 'pending') {
             $event = $reservation->event;
 
@@ -172,10 +169,6 @@ class EventController extends Controller
         if (Gate::denies('deny reservations')) {
             abort(403, 'Permission denied');
         }
-        if (Auth::id() !== $reservation->user_id) {
-            abort(403, 'Permission denied');
-        }
-
         $reservation->update(['status' => 'denied']);
 
         return redirect()->back()->with('success', "{$reservation->event->title} is denied");

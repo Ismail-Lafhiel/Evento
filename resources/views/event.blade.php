@@ -104,16 +104,25 @@
                     </div>
                     <hr class="my-8" />
                     <div class="flex flex-wrap gap-4">
-                        <form action="{{ route('book.now', ['eventId' => $event->id]) }}" method="post">
-                            @csrf
-                            <button type="submit"
-                                class="min-w-[200px] px-4 py-3 bg-primary-800 hover:bg-primary-900 text-white text-sm font-bold rounded">Book
-                                Now</button>
-                        </form>
+                        @if ($event->reservations->where('status', 'approved')->isNotEmpty())
+                            <button type="button"
+                                class="min-w-[200px] px-4 py-3 bg-gray-500 text-white text-sm font-bold rounded cursor-not-allowed"
+                                disabled>Booked</button>
+                        @else
+                            <form action="{{ route('book.now', ['eventId' => $event->id]) }}" method="post">
+                                @csrf
+                                <button type="submit"
+                                    class="min-w-[200px] px-4 py-3 bg-primary-800 hover:bg-primary-900 text-white text-sm font-bold rounded">Book
+                                    Now</button>
+                            </form>
+                        @endif
+
                         <a href="{{ route('discover-events') }}"
                             class="min-w-[200px] text-center px-4 py-2.5 border border-gray-800 bg-transparent hover:bg-gray-50 text-gray-800 text-sm font-bold rounded">Go
                             back</a>
                     </div>
+
+
                     <hr class="my-8" />
                     <div>
                         <p class="text-lg text-gray-600 capitalize">Owner</p>
