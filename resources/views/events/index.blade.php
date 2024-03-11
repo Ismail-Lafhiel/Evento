@@ -191,14 +191,14 @@
                                                 <td class="px-4 py-3">{{ $event->seats_number }}</td>
                                                 <td class="px-4 py-3">{{ $event->reservation_status }}</td>
                                                 @role('organizer')
-                                                <td>{{$event->status}}</td>
+                                                    <td>{{ $event->status }}</td>
                                                     <td class="px-4 py-3">
                                                         @if ($event->reservations->isEmpty())
                                                             <div>No reservations available</div>
                                                         @else
-                                                            @forelse ($event->reservations as $reservation)
-                                                                <div class="flex space-x-2">
-                                                                    @if ($reservation->status === 'pending' && $reservation->event->reservation_status === 'manual')
+                                                            @foreach ($event->reservations as $reservation)
+                                                                @if ($reservation->status === 'pending' && $reservation->event->reservation_status === 'manual')
+                                                                    <div class="flex space-x-2">
                                                                         @can('approve reservations')
                                                                             <form method="post"
                                                                                 action="{{ route('approve-reservation', ['reservation' => $reservation->id]) }}">
@@ -216,13 +216,12 @@
                                                                                     type="submit">Deny</button>
                                                                             </form>
                                                                         @endcan
-                                                                    @else
-                                                                        <div>Nothing to manage</div>
-                                                                    @endif
-                                                                </div>
-                                                            @empty
-                                                                <div>No reservations available</div>
-                                                            @endforelse
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                            @if ($event->reservations->where('status', 'pending')->where('event.reservation_status', 'manual')->isEmpty())
+                                                                <div>Nothing to manage</div>
+                                                            @endif
                                                         @endif
                                                     </td>
                                                 @endrole
